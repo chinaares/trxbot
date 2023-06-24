@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>机器人部署 - 电报机器人社区(TelegBot.org)</title>
+    <link rel="stylesheet" href="/app/install/component/pear/css/pear.css" />
+    <link rel="stylesheet" href="/app/install/css/reset.css" />
+    <style>
+    .layui-form-label{
+        width: 108px;
+    }
+    .layui-input-block{
+        margin-left: 140px;
+    }
+    .layui-form-item .layui-input-inline{
+        width: 180px;
+    }
+    </style>
+</head>
+<body class="pear-container">
+<div class="layui-row layui-col-space10">
+    <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card">
+                <div class="layui-card-body" style="padding-top: 6px;">
+                    <h1 style="text-align:center;margin: 20px 0 20px"><?=htmlspecialchars($name)?></h1>
+
+                    <div class="layui-carousel" id="stepForm" lay-filter="stepForm" style="margin: 0 auto;">
+                        <div carousel-item>
+                            <div>
+                                <form class="layui-form" action="javascript:void(0);" style="margin: 0 auto;max-width: 480px;padding-top: 20px;">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">你的域名<i class="layui-icon layui-icon-about" onclick="tips('WEB_URL')"></i></label>
+                                        <div class="layui-input-block">
+                                            <input type="text" placeholder="setwebhook" name="WEB_URL" class="layui-input WEB_URL" lay-verify="required" required value="https://" autocomplete="off"/>
+                                        </div> 
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">机器人Token<i class="layui-icon layui-icon-about" onclick="tips('API_TOKEN')"></i></label>
+                                        <div class="layui-input-block">
+                                            <textarea name="API_TOKEN" placeholder="请输入电报机器人Api-Token" class="layui-textarea API_TOKEN" lay-verify="required" required></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">机器用户名</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" placeholder="填写Token后自动获取" name="API_BOT" class="layui-input API_BOT" lay-verify="required" required value="" autocomplete="off" disabled/>
+                                        </div> 
+                                    </div>
+                                    
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">管理飞机ID<i class="layui-icon layui-icon-about" onclick="tips('Admin')"></i></label>
+                                        <div class="layui-input-block">
+                                            <input type="text" placeholder="填写管理员的飞机ID" name="Admin" class="layui-input Admin" lay-verify="required" required value="" autocomplete="off" />
+                                        </div> 
+                                    </div>
+                                     
+                                    
+                                    
+                                    <!--<div class="layui-form-item">-->
+                                    <!--    <label class="layui-form-label">强制覆盖</label>-->
+                                    <!--    <div class="layui-input-block">-->
+                                    <!--        <input type="checkbox" name="overwrite" lay-skin="primary">-->
+                                    <!--    </div>-->
+                                    <!--</div>-->
+                                    
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">默认菜单设定</label>
+                                        <div class="layui-input-block">
+                                          <input type="radio" name="menu" value="webapp" title="小程序" checked> 
+                                          <input type="radio" name="menu" value="command" title="菜单命令"  >
+                                           
+                                        </div>
+                                      </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="pear-btn next tiaoguo" style="display:none;">跳过此步骤</button>
+                                            <button id="xiayibu" class="layui-btn layui-btn-normal" lay-submit lay-filter="formStep"  >
+                                                &emsp;下一步&emsp;
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <!--2-->
+                            <div>
+                                <form class="layui-form"  action="javascript:void(0);" style="margin: 0 auto;max-width: 480px;padding-top: 20px;">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">钱包密钥<i class="layui-icon layui-icon-about" onclick="tips('PrivateKey')"></i></label>
+                                        <div class="layui-input-block">
+                                            <textarea name="PrivateKey" placeholder="TRC20钱包密钥" class="layui-textarea PrivateKey" lay-verify="required" required></textarea> 
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">波场Token<i class="layui-icon layui-icon-about" onclick="tips('TRON_API_KEY')"></i></label>
+                                        <div class="layui-input-block">
+                                            <!--<textarea name="TRON_API_KEY" placeholder="TRC20钱包密钥" class="layui-textarea PrivateKey" lay-verify="required" required></textarea>-->
+                                            <input type="text" placeholder="波场官方API-TOKEN" name="TRON_API_KEY" class="layui-input TRON_API_KEY"  />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">监听阈值<i class="layui-icon layui-icon-about" onclick="tips('Ttime')"></i></label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" placeholder="监听多少秒数据" name="Ttime" class="layui-input Ttime" lay-verify="required" required oninput="value=value.replace(/[^\d]/g,'')"/>
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">建议600-3600 (秒)</div>
+                                    </div> 
+                                    
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">补TRX上限U<i class="layui-icon layui-icon-about" onclick="tips('maxusdt')"></i></label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" placeholder="买TRX上限U" name="maxusdt" class="layui-input maxusdt" lay-verify="required" required oninput="value=value.replace(/[^\d]/g,'')"/>
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">建议10起 (USDT)</div>
+                                    </div>
+                                    
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">抽成比例<i class="layui-icon layui-icon-about" onclick="tips('Rate')"></i></label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" placeholder="抽成比例%" name="Rate" class="layui-input Rate" lay-verify="required" required oninput="value=value.replace(/[^\d]/g,'')"/>
+                                        </div> 
+                                        <div class="layui-form-mid layui-word-aux">10-15 (%)</div>
+                                    </div>
+                                    
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">最低兑换U<i class="layui-icon layui-icon-about" onclick="tips('Minusdt')"></i></label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" placeholder="低于则不回TRX" name="Minusdt" class="layui-input Minusdt" lay-verify="required" required oninput="value=value.replace(/[^\d]/g,'')"/>
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">建议1起 (USDT)</div>
+                                    </div>
+                                   
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="pear-btn pre">上一步</button>
+                                            <button class="pear-btn pear-btn-primary" lay-submit lay-filter="formStep2">
+                                                &emsp;确定&emsp;
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div>
+                                <div style="text-align: center;margin-top: 90px;">
+                                    <i class="layui-icon layui-circle pear-back" style="color: white;font-size:30px;font-weight:bold;background: #52C41A;padding: 20px;line-height: 80px;">&#xe605;</i>
+                                    <div style="font-size: 24px;color: #333;font-weight: 500;margin-top: 30px;">
+                                        安装成功
+                                    </div>
+                                    <div style="font-size: 14px;color: #666;margin-top: 20px;">重启项目生效</div>
+                                </div>
+                                <div style="text-align: center;margin-top: 50px;">
+                                    <button class="pear-btn pear-btn-primary finish"  onclick="window.close();window.open('about:blank','_self'); ">关闭页面</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><span  id="jieguo1"></span>
+    </div>
+
+</div>
+
+<script>
+var API_TOKEN =""; //localStorage.getItem("API_TOKEN");
+var API_BOT = "";//localStorage.getItem("API_BOT");   
+var WEB_URL = localStorage.getItem("WEB_URL");
+var Admin = localStorage.getItem("Admin"); 
+var PrivateKey = localStorage.getItem("PrivateKey");
+var TRON_API_KEY = localStorage.getItem("TRON_API_KEY");
+ 
+</script>
+
+<script src="/app/install/component/layui/layui.js"></script>
+<script src="/app/install/component/pear/pear.js"></script>
+
+<script>
+    layui.use(["form", "step","code","element", "popup"], function() {
+        var $ = layui.$,
+                form = layui.form,
+                step = layui.step;
+
+        layui.code();
+        
+        if(API_TOKEN && API_BOT){
+            $(".API_TOKEN").val(API_TOKEN);
+            $(".API_BOT").val(API_BOT);   
+        }else{
+            $("#xiayibu").attr("disabled",true);
+            $("#xiayibu").addClass("layui-btn-disabled");
+        }
+        if(Admin && WEB_URL){
+            $(".tiaoguo").show();
+            $(".WEB_URL").val(WEB_URL);
+            $(".Admin").val(Admin);  
+        }
+        
+        if(PrivateKey && TRON_API_KEY){ 
+            $(".PrivateKey").val(PrivateKey);
+            $(".TRON_API_KEY").val(TRON_API_KEY);  
+        }
+             
+
+        step.render({
+            elem: "#stepForm",
+            filter: "stepForm",
+            width: "100%",
+            stepWidth: "70%",
+            height: "520px",
+            stepItems: [{
+                title: "填写机器人信息"
+            }, {
+                title: "配置钱包信息"
+            }, {
+                title: "完成"
+            }]
+        });
+
+        form.on("submit(formStep)", function(data) {
+            let loading = layer.load();
+            $.ajax({
+                url: "/app/SwapTRX8bot/index/installtg",
+                type: "POST",
+                dataType: "json",
+                data: data.field,
+                success: function (res) {
+                    if (res.code != 1) {
+                        return layui.popup.failure(res.msg);
+                    }
+                    layui.popup.success("机器人信息通过..", function () {
+                        let text = "<font color='#3ec742'>机器人信息,验证通过</font><br><font color='#f00'>开始自动部署机器人..</font> <br> <b>飞机管理员:</b><font color='#f00'><u>"+res.info.tgname + "</u></font>会收到配置进度结果..";
+                        document.getElementById("jieguo1").innerHTML = text;
+                        step.next("#stepForm");
+                    }); 
+                },
+                complete: function () {
+                    layer.close(loading);
+                }
+            })
+            return false;
+        });
+
+        form.on("submit(formStep2)", function(data) {
+            let loading = layer.load();
+            $.ajax({
+                url: "/app/SwapTRX8bot/index/installtrc",
+                type: "POST",
+                dataType: "json",
+                data: data.field,
+                success: function (res) {
+                    if (res.code != 1 ) {
+                        return layui.popup.failure(res.msg);
+                    } 
+                    localStorage.setItem("PrivateKey",$(".PrivateKey").val());
+                    localStorage.setItem("TRON_API_KEY",$(".TRON_API_KEY").val());
+                    step.next("#stepForm");
+                    layer.close(loading);
+                },
+                complete: function () { 
+                    layer.close(loading);
+                }
+            })
+            return false;
+        });
+
+        $(".pre").click(function() {
+            step.pre("#stepForm");
+            return false;
+        });
+
+        $(".next").click(function() {
+            step.next("#stepForm"); 
+            return false;
+        });
+
+        $(".finish").click(function() {
+            window.opener=null;window.close();
+        });
+        
+        $(".API_TOKEN").blur(function(){
+            let tgtoken = $(".API_TOKEN").val();
+            $("#xiayibu").attr("disabled",true);
+             $("#xiayibu").addClass("layui-btn-disabled");
+            if(tgtoken.length > 32){ 
+                let loading = layer.load();
+                $.ajax({
+                    url: "/app/SwapTRX8bot/index/getMe",
+                    type: "POST",
+                    dataType: "json",
+                    data: {token:tgtoken},
+                    success: function (res) {
+                        if (res.code != 1) {
+                            $(".API_BOT").val("");
+                            return layer.msg(res.msg,{offset:['54px'],anim: 1});
+                        }
+                        localStorage.setItem("API_TOKEN", tgtoken);
+                        localStorage.setItem("API_BOT", res.data);
+                        $(".API_BOT").val(res.data);
+                        layer.close(loading);
+                        $("#xiayibu").attr("disabled",false);
+                        $("#xiayibu").removeClass("layui-btn-disabled");
+                    },
+                    complete: function () {
+                        layer.close(loading);
+                    }
+                })
+            }else{
+                $(".API_BOT").val("");
+            }
+            return false;
+		  });
+    })
+    
+function tips (val) {
+    if(val =="Admin"){
+      var text ='填写管理(老板)的飞机号的ID<br>它将获得小程序的最高管理权限<br>不知道自己飞机ID多少请给<b>@myidbot</b> 发送：<u>/getid</u> 获取'; 
+    }else if(val == "API_TOKEN"){
+        var text = '通过机器人<b>@Botfather</b> <br>创建或获得你的机器人API Token<br><br>/newbot 创建机器人 (不会请百度)<br>/mybot 获取机器人>Api Token';   
+    }else if(val == "TRON_API_KEY"){
+        var text = '如果不填写该项可能会导致你钱包USDT到账监听出现延迟等问题,建议去注册一个波场官方的apikey 下面是教程：<br><br>访问<b><a href="https://www.trongrid.io" target="_blank">https://www.trongrid.io</a></b> <br>1.免费注册账号登录后 <br>2.在<b>API Keys</b> 点击：Create *创建API<br>3.点击你刚刚创建的API右侧：<b>Check</b> 即可看到你的波场API-KEY';   
+    }else if(val == "Ttime"){
+        var text = '意思是监听钱包**秒内的USDT到账数据<br>通常填写：600 - 3600 足以';   
+    }else if(val == "Rate"){
+        var text = '举例抽成比例：10 （10%）<br>当前实时TRX价格： 1U = 15TRX<br>则用户转1U 自动回：13.5TRX<br>抽成算法：TRX实时价格 x 抽成比例 ÷ 100';   
+    }else if(val == "price"){
+        var text = '每1U 可以 换多少TRX - 该模式不论TRX实时价格上涨还是下跌都不变<br><br>比如填写：15 <br>用户转1U 回15TRX <br>用户转10U 回 150TRX';   
+    }else if(val == "maxusdt"){
+        var text = '<b>何为自动补充TRX？</b><br>当你钱包内TRX余额不足时自动在sunswap上以实时价格购买TRX<br><br><b>上限U？</b>就是当TRX不足时单次最多自动购买多少USDT的TRX<br><br><b>举例</b> 当你钱包内只剩下300TRX时<br>有用户兑换转入了100U (假设应回：1500TRX)<br>这时就会自动在链上购买TRX（购买数量 = 用户转入U + 最大上限U）<br>钱包U小于上限U时将全部兑换 <br>当你钱包TRX足够时该功能不会触发';   
+    }else if(val == "WEB_URL"){
+        var text = '必须开启SSL也就是：https:// <br>域名结尾不用加 / <br><br>该域名作用是配置电报机器人的webhook函数<br>也就是用于各种功能消息监听交互作用<br><br>环境配置教程中有前置配置说明<br>没有域名就随便注册一个(使用香港服务器无需备案的)';    
+    }else if(val == "PrivateKey"){
+        var text = '波场(泰达币 - TRC20) USDT钱包的密钥';    
+    }else if(val == "Minusdt"){
+        var text = '设置一个最低兑换USDT数量，低于该设定将不自动回TRX';    
+    }  
+    
+      layer.open({
+        type: 1 ,
+        title:"解释说明"
+        ,id: 'layerDemo'+val //防止重复弹出
+        ,content: '<div style="padding: 10px 20px;max-width: 480px;">'+ text +'</div>'
+        ,btn: '关闭'
+        ,btnAlign: 'c' //按钮居中
+        ,shade: 0 //不显示遮罩
+        ,yes: function(){
+          layer.closeAll();
+        }
+      });
+ 
+}
+
+
+ 
+    
+</script>
+</body>
+</html>

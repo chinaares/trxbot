@@ -1,0 +1,77 @@
+{
+  "name": "workerman/webman",
+  "type": "project",
+  "keywords": [
+    "high performance",
+    "http service"
+  ],
+  "homepage": "https://www.workerman.net",
+  "license": "MIT",
+  "description": "High performance HTTP Service Framework.",
+  "authors": [
+    {
+      "name": "walkor",
+      "email": "walkor@workerman.net",
+      "homepage": "https://www.workerman.net",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "walkor@workerman.net",
+    "issues": "https://github.com/walkor/webman/issues",
+    "forum": "https://wenda.workerman.net/",
+    "wiki": "https://workerman.net/doc/webman",
+    "source": "https://github.com/walkor/webman"
+  },
+  "require": {
+    "php": ">=7.2",
+    "workerman/webman-framework": "^1.4.7",
+    "monolog/monolog": "^2.0",
+    "webman/console": "^1.2.12",
+    "psr/container": "^1.1.1",
+    "php-di/php-di": "^6",
+    "doctrine/annotations": "^1.14",
+    "illuminate/redis": "^9.40",
+    "webman/redis-queue": "^1.2",
+    "webman/think-orm": "^1.0",
+    "webman/think-cache": "^1.0",
+    "workerman/crontab": "^1.0",
+    "topthink/think-validate": "^2.0",
+    "vectorface/googleauthenticator": "^3.0",
+    "hashids/hashids": "^4.1",
+    "guzzlehttp/guzzle": "7.5.0",
+    "vlucas/phpdotenv": "^5.5",
+    "dcat/easy-excel": "^1.1",
+    "webman/push": "^1.0",
+    "webman/gateway-worker": "^1.0",
+    "tinywan/storage": "^1.0",
+    "webman/captcha": "^1.0",
+    "smalpony/tronweb": "^1.0",
+    "tntma/webman-task": "^1.0",
+    "tntma/tntjwt": "^1.0",
+    "zjkal/time-helper": "^1.1" 
+  },
+  "suggest": {
+    "ext-event": "For better performance. "
+  },
+  "autoload": {
+    "psr-4": {
+      "": "./",
+      "App\\": "./app"
+    },
+    "files": [
+      "./support/helpres.php"
+    ]
+  },
+  "scripts": {
+    "post-package-install": [
+      "support\\Plugin::install"
+    ],
+    "post-package-update": [
+      "support\\Plugin::install"
+    ],
+    "pre-package-uninstall": [
+      "support\\Plugin::uninstall"
+    ]
+  }
+}

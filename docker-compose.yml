@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:   
+  php:
+    image: telegbot/php8:1.1
+    network_mode: host
+    working_dir: /telegbot
+    volumes:
+      - ./:/telegbot
+    ports:
+      - "8686:8686" 
+    tty: true
+    command:
+      - /bin/bash
+      - -c
+      - |
+        chmod +x /telegbot/install.sh
+        sh install.sh 
+        php webman start   

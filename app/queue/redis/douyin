@@ -1,0 +1,121 @@
+<?php
+
+namespace app\queue\redis;
+
+ 
+use Webman\RedisQueue\Consumer;
+use Exception;
+use think\facade\Db;
+use support\Redis;//redis缓存
+use Webman\Push\Api; //push推送 
+use Hashids\Hashids; #ID加解密
+
+
+ 
+    
+class douyin implements Consumer
+{
+    // 要消费的队列名
+    public $queue = 'send_douyin';
+
+    // 连接名，对应 config/redis_queue.php 里的连接`
+    public $connection = 'default';
+
+    // 消费
+    public function consume($data){
+        $Hget = Redis::hget('cookie',$data['order']);
+        if(!empty($Hget)){
+            $pay_log = Db::name('pay_log')->where('gfdd', $data['order'])->find(); 
+        } 
+            if(empty($pay_log)){
+                //没有数据跳过 按理该丢入异常或错误订单数据库
+                //throw new \Exception(); 
+            }else{
+                $qudao = Db::name('pay_qudao')->where("id",$pay_log['qdid'])->find(); 
+                $user = Db::name('account')->where("id",$pay_log['myid'])->find();
+                $date = date("Ymd",$pay_log['time']);
+                $sql['oktime'] = time(); 
+                $sql['okmoney'] = $data['money'] / 100;
+                
+                #push 成功通知
+                $hashid = new Hashids(); 
+                $push = new Api('http://127.0.0.1:3012',config('plugin.webman.push.app.app_key'),config('plugin.webman.push.app.app_secret'));  
+                $push->trigger("user-".$hashid->encode($pay_log['id']), 'notify', '1'); 
+                
+                
+            	#判断订单状态是否是 未处理
+            	if($pay_log['zt'] === 0){
+            	    $LOCK_val = "notify_{$pay_log['id']}";
+            	    $LOCK = Redis::setnx($LOCK_val,1);
+            	    if($LOCK){
+            	        Redis::expire($LOCK_val,10); //设置600秒过期时间
+            	        $sql['sxfmoney'] = round($sql['okmoney'] * ($user['rate']+$qudao['payrate']) / 100,2);
+            	        
+            	        #更新订单信息
+            	        $sql['zt'] = 1; 
+            	        Db::name('pay_log')->where('id',$pay_log['id'])->update($sql);
+            	        
+            	        
+            	        #更新pay_qudao
+            	        Db::name('pay_qudao')->where([["id","=",$pay_log['qdid']],["date","=",$date]])->inc('oknumber', 1)->inc('okmoney', $sql['okmoney'])->update(['time'=>$sql['oktime'] ]);   
+            	        
+            	        
+            	        #更新 log 账单明细记录
+                        $so = [];
+                        array_push($so,"myid");
+                        array_push($so,"=");
+                        array_push($so,$pay_log['myid']);
+                        
+                        array_push($so,"date");
+                        array_push($so,"=");
+                        array_push($so,$date);        
+                        $so = array_chunk($so,3);//拆分  
+                        
+                        Db::name('today_log')->where([$so])->inc('oknum', 1)->inc('okmoney', $sql['okmoney'])->update();//today_log 日
+                        Db::name('today_log')->where([["myid","=",$pay_log['myid']],['date','=',date("Ym",$pay_log['time']) ]])->inc('oknum', 1)->inc('okmoney', $sql['okmoney'])->update();//today_log 月
+                        
+                        Db::name('today_qd_log')->where([$so,["qdid","=",$qudao['id']] ])->inc('oknum', 1)->inc('okmoney', $sql['okmoney'])->update();
+                        
+                        Db::name('account')->where("id",$pay_log['myid'])->inc('ddnumber', 1)->inc('smoney',$sql['okmoney'])->dec('money',$sql['sxfmoney'])->update(); 
+            	   
+            	        
+            	    }//redis     
+            	    
+            	}//zt=0 end
+            	
+            	
+            	#发起异步通知  
+         		$sign = MD5("1#{$pay_log['myid']}#{$user['key']}#{$pay_log['dingdan']}#{$pay_log['money']}#{$pay_log['money']}#{$pay_log['time']}#{$sql['oktime']}"); 
+            	$data = [
+            	  'order' => $pay_log['dingdan'],
+                  'zt' =>'1', 
+                  'money' => $pay_log['money'],
+                  'okmoney' => $pay_log['money'],
+                  'time' => $pay_log['time'],
+                  'oktime' => $sql['oktime'],
+                  'remark' => $pay_log['remark'],
+                  'returl' => $pay_log['returnurl'],
+                  'sign' => $sign,
+                ];
+        		$data = http_build_query($data);
+            
+            	if($user['post']){
+                    $notifytext = curl_post_https($pay_log['notifyurl'],$data);  
+                }else{
+                    $notifytext = curl_get_https($pay_log['notifyurl']."?".$data);   
+                }
+        
+            	//判断下游返回的内容
+            	if(strpos($notifytext,"ucce") > 0){
+            	    Db::name('pay_log')->where('id',$pay_log['id'])->update(['notifyzt' => "1",'notifymsg'=>"成功"]);  
+        		}else{ 
+        			Db::name('pay_log')->where('id',$pay_log['id'])->update(['notifymsg'=>$notifytext]);  	
+                }
+                $headers = array();
+                $headers[] = "cookie:".$qudao['cookie']; 
+                curl_get_https("https://wallet-activity-lq.amemv.com/caijing/wallet_api/delete_billing/?type=6&order_id={$pay_log['gfdd']}&aid=1128",$headers);
+                
+            } 
+        
+    }
+}
