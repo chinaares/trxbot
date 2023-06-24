@@ -62,33 +62,34 @@
 	因为那个查链上数据的网站强制要求携带apikei了
 	
 ## 机器人预览图
-##### 启动项目 docker compose up
+### 启动项目 docker compose up
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/001.png">
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/002.png">
 
-##### 配置机器人钱包信息
+### 配置机器人钱包信息
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/003.png">
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/004.png">
 
-##### 手机上机器人样式图
+### 手机上机器人样式图
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/005.jpg">
 
-##### 手机上进入小程序图
+### 手机上进入小程序图
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/006.jpg">
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/007.jpg">
 
-##### 电报PC端进入小程序图
+### 电报PC端进入小程序图
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/008.png">
 
-##### 电脑端登入管理后台图
+### 电脑端登入管理后台图
 
-###### 管理后台地址：http://你的域名/app/user  (telegram登录)
+##### 管理后台地址：http://你的域名/app/user  (telegram登录)
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/009.png">
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/0010.png">
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/0011.png">
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/0012.png">
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/0013.png">
-##### 开发调试机器人时终端显示的信息方便
+
+### 开发调试机器人时终端显示的信息方便
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/0014.png">
 
 
@@ -121,7 +122,7 @@
 
 	Admin_api.php 管理小程序功能API（不是管理员后台哦）
 	
-##### 关于目录下：Telegram.php这个文件 
+#### 关于目录下：Telegram.php这个文件 
 	是框架包装文件,同时小程序的登录算法在内,为了安全该文件进行了简单混淆 请忽略
 	
 	交流电报群：@phpTRON
