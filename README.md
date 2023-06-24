@@ -65,17 +65,23 @@
 ##### 启动项目 docker compose up
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/001.png">
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/002.png">
+
 ##### 配置机器人钱包信息
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/003.png">
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/004.png">
+
 ##### 手机上机器人样式图
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/005.jpg">
+
 ##### 手机上进入小程序图
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/006.jpg">
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/007.jpg">
+
 ##### 电报PC端进入小程序图
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/008.png">
+
 ##### 电脑端登入管理后台图
+
 ###### 管理后台地址：http://你的域名/app/user  (telegram登录)
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/009.png">
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/0010.png">
