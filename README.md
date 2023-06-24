@@ -15,7 +15,10 @@
 ------------ 
 
 ## 机器人部署详细教程
-教程地址：[https://www.telegbot.org/jiaocheng/29.html](https://www.telegbot.org/jiaocheng/29.html "https://www.telegbot.org/jiaocheng/29.html")
+	1.宝塔面板
+	2.安装docker redis  nginx mysql5.7
+	3.下载代码上传至网站根目录,然后输入命令启动机器人：docker compose up 
+本机器人详细部署教程（带图教程）：[https://www.telegbot.org/jiaocheng/29.html](https://www.telegbot.org/jiaocheng/29.html "https://www.telegbot.org/jiaocheng/29.html")
 
 
 
