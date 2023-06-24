@@ -62,7 +62,7 @@
 	因为那个查链上数据的网站强制要求携带apikei了
 	
 ## 机器人预览图
-##### 启动项目(docker compose up)
+##### 启动项目 docker compose up
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/001.png">
 <img src="https://github.com/smalpony/trxbot/blob/main/photo/002.png">
 ##### 配置机器人钱包信息
